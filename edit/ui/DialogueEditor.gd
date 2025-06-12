@@ -4,10 +4,10 @@ extends Control
 const DIALOGUE_PATH := "user://dialogue.json"
 
 
-@onready var entries_container = $HBoxContainer/VBoxContainer/ScrollContainer/Entries
-@onready var load_button = $HBoxContainer/VBoxContainer/LoadJSON
-@onready var save_button = $HBoxContainer/VBoxContainer/SaveJSON
-@onready var add_button = $HBoxContainer/VBoxContainer/AddNewEntry
+@onready var entries_container = $V/ScrollContainer/V/Entries
+@onready var load_button =$V/H/V/LoadJSON
+@onready var save_button =$V/H/V/SaveJSON
+@onready var add_button = $V/H/V/AddNewEntry
 
 var dialogue_data: Array = []
 
@@ -27,16 +27,24 @@ func load_json():
 		var content = file.get_as_text()
 		file.close()
 		var result = JSON.parse_string(content)
-		if !result.size():
-			return
-		dialogue_data = result
-		refresh_ui()
+		if typeof(result) == TYPE_DICTIONARY:
+			dialogue_data = []
+			for id in result.keys():
+				dialogue_data.append(result[id])
+			refresh_ui()
+		else:
+			push_error("Dialogue file is not a dictionary structure.")
 	else:
 		dialogue_data = []
 
 
+
 func save_json():
-	var json_text = JSON.stringify(dialogue_data, "\t")
+	var dialogue_dict := {}
+	for entry in dialogue_data:
+		if entry.has("ID"):
+			dialogue_dict[entry["ID"]] = entry
+	var json_text = JSON.stringify(dialogue_dict, "\t")
 	if json_text == null:
 		push_error("Failed to stringify dialogue data!")
 		return
@@ -46,6 +54,7 @@ func save_json():
 		return
 	file.store_string(json_text)
 	file.close()
+
 
 
 func refresh_ui():

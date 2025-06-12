@@ -12,7 +12,6 @@ script = ExtResource("1")
 
 [node name="ID" type="LineEdit" parent="."]
 layout_mode = 2
-size_flags_horizontal = 3
 placeholder_text = "ID"
 
 [node name="Speaker" type="LineEdit" parent="."]
@@ -33,14 +32,15 @@ size_flags_horizontal = 3
 placeholder_text = "Next"
 
 [node name="Choices" type="LineEdit" parent="."]
+custom_minimum_size = Vector2(111, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Choices (Label:ID,Label2:ID2)"
+placeholder_text = "Choice 1:ID,Choice 2:ID2"
 
 [node name="Avatar" type="LineEdit" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Avatar Path"
+placeholder_text = "Avatar"
 
 [node name="ItemRequired" type="LineEdit" parent="."]
 layout_mode = 2
