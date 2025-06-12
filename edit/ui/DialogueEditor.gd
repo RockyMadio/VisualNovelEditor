@@ -5,9 +5,9 @@ const DIALOGUE_PATH := "user://dialogue.json"
 
 
 @onready var entries_container = $H/V/V/ScrollContainer/V/Entries
-@onready var load_button =$H/V/LoadJSON
-@onready var save_button =$H/V/SaveJSON
-@onready var add_button = $H/V/AddNewEntry
+@onready var load_button =$H/V/H/V/LoadJSON
+@onready var save_button =$H/V/H/V/SaveJSON
+@onready var add_button = $H/V/H/V/AddNewEntry
 @onready var json_preview = $H/JSONPreview
 
 var dialogue_data: Array = []
@@ -131,8 +131,14 @@ func _on_line_deleted(id: String):
 	dialogue_data = dialogue_data.filter(func(entry): return entry["ID"] != id)
 	refresh_ui()
 
+
+
+
 func _on_AddNewEntry_pressed():
-	var new_id = "new_" + str(Time.get_ticks_msec())
+	var index := dialogue_data.size() + 1
+	#var new_id = "new_" + str(Time.get_ticks_msec())
+	var new_id := "new_" + str(index)
+
 	var new_entry = {
 		"ID": new_id,
 		"Speaker": "",
