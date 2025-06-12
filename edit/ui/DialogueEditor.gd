@@ -4,10 +4,11 @@ extends Control
 const DIALOGUE_PATH := "user://dialogue.json"
 
 
-@onready var entries_container = $V/ScrollContainer/V/Entries
-@onready var load_button =$V/H/V/LoadJSON
-@onready var save_button =$V/H/V/SaveJSON
-@onready var add_button = $V/H/V/AddNewEntry
+@onready var entries_container = $H/V/V/ScrollContainer/V/Entries
+@onready var load_button =$H/V/LoadJSON
+@onready var save_button =$H/V/SaveJSON
+@onready var add_button = $H/V/AddNewEntry
+@onready var json_preview = $H/JSONPreview
 
 var dialogue_data: Array = []
 
@@ -38,22 +39,50 @@ func load_json():
 		dialogue_data = []
 
 
+func ordered_dict_to_json(data: Dictionary, key_order: Array) -> String:
+	var json_str := "{\n"
+	var keys = data.keys()
+	keys.sort_custom(func(a, b): return int(a.get_slice("_", -1)) < int(b.get_slice("_", -1)))
+	for i in range(keys.size()):
+		var id = keys[i]
+		var entry = data[id]
+		json_str += "\t\"" + id + "\": {\n"
+		for j in range(key_order.size()):
+			var key = key_order[j]
+			var value = entry.get(key, "")
+			json_str += "\t\t\"" + key + "\": " + JSON.stringify(value)
+
+			json_str += ",\n" if j < key_order.size() - 1 else "\n"
+		json_str += "\t}"
+		json_str += ",\n" if i < keys.size() - 1 else "\n"
+	json_str += "}"
+	return json_str
+
 
 func save_json():
 	var dialogue_dict := {}
+	var key_order := [
+		"ID", "Speaker", "Text", "Next", "Choices",
+		"Avatar", "ItemRequired", "ItemGive", "Event"
+	]
+
 	for entry in dialogue_data:
 		if entry.has("ID"):
-			dialogue_dict[entry["ID"]] = entry
-	var json_text = JSON.stringify(dialogue_dict, "\t")
-	if json_text == null:
-		push_error("Failed to stringify dialogue data!")
-		return
+			var ordered_entry := {}
+			for k in key_order:
+				ordered_entry[k] = entry.get(k, "")
+			dialogue_dict[entry["ID"]] = ordered_entry
+
+	var json_text := ordered_dict_to_json(dialogue_dict, key_order)
+
 	var file = FileAccess.open(DIALOGUE_PATH, FileAccess.WRITE)
 	if file == null:
 		push_error("Failed to open file for writing: " + DIALOGUE_PATH)
 		return
 	file.store_string(json_text)
 	file.close()
+
+	json_preview.text =  json_text
 
 
 

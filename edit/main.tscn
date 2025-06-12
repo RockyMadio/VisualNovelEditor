@@ -14,7 +14,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_ig7tw")
 
-[node name="V" type="VBoxContainer" parent="."]
+[node name="H" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,111 +22,88 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="H" type="HBoxContainer" parent="V"]
-layout_mode = 2
-
-[node name="Label" type="RichTextLabel" parent="V/H"]
+[node name="JSONPreview" type="RichTextLabel" parent="H"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-text = "Example
+focus_mode = 2
+selection_enabled = true
 
-{
-  {
-    \"ID\": \"1\",
-    \"Speaker\": \"Alice\",
-    \"Text\": \"Hi, do you have the gem?\",
-    \"Choices\": \"Yes:2,No:3\",
-    \"Next\": \"\",
-    \"Event\": \"ask_gem\",
-    \"Avatar\": \"alice.png\",
-    \"ItemRequired\": \"gem\",
-    \"ItemGive\": \"\"
-  },
-  {
-    \"ID\": \"2\",
-    \"Speaker\": \"Alice\",
-    \"Text\": \"Thank you, here's a key!\",
-    \"Choices\": \"\",
-    \"Next\": \"4\",
-    \"Event\": \"give_key\",
-    \"Avatar\": \"alice.png\",
-    \"ItemRequired\": \"\",
-    \"ItemGive\": \"key\"
-  },
- }"
-
-[node name="V" type="VBoxContainer" parent="V/H"]
+[node name="V" type="VBoxContainer" parent="H"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LoadJSON" type="Button" parent="V/H/V"]
+[node name="LoadJSON" type="Button" parent="H/V"]
 custom_minimum_size = Vector2(150, 20)
 layout_mode = 2
 text = "Load"
 
-[node name="SaveJSON" type="Button" parent="V/H/V"]
+[node name="SaveJSON" type="Button" parent="H/V"]
 custom_minimum_size = Vector2(150, 20)
 layout_mode = 2
 text = "Save"
 
-[node name="AddNewEntry" type="Button" parent="V/H/V"]
+[node name="AddNewEntry" type="Button" parent="H/V"]
 custom_minimum_size = Vector2(150, 20)
 layout_mode = 2
 text = "AddNewEntry"
 
-[node name="M" type="MarginContainer" parent="V"]
-layout_mode = 2
-theme_override_constants/margin_bottom = 20
-
-[node name="ScrollContainer" type="ScrollContainer" parent="V"]
+[node name="V" type="VBoxContainer" parent="H/V"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="V" type="VBoxContainer" parent="V/ScrollContainer"]
+[node name="M" type="MarginContainer" parent="H/V/V"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="H/V/V"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="V" type="VBoxContainer" parent="H/V/V/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DialogueLineEditor" parent="V/ScrollContainer/V" instance=ExtResource("2_0xm2m")]
+[node name="DialogueLineEditor" parent="H/V/V/ScrollContainer/V" instance=ExtResource("2_0xm2m")]
 layout_mode = 2
 
-[node name="ID" parent="V/ScrollContainer/V/DialogueLineEditor" index="0"]
+[node name="ID" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="0"]
 text = "ID"
 
-[node name="Speaker" parent="V/ScrollContainer/V/DialogueLineEditor" index="1"]
+[node name="Speaker" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="1"]
 text = "Speaker"
 
-[node name="Text" parent="V/ScrollContainer/V/DialogueLineEditor" index="2"]
+[node name="Text" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="2"]
 text = "Content, or only translation key"
 
-[node name="Next" parent="V/ScrollContainer/V/DialogueLineEditor" index="3"]
+[node name="Next" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="3"]
 text = "Skip to"
 
-[node name="Choices" parent="V/ScrollContainer/V/DialogueLineEditor" index="4"]
+[node name="Choices" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="4"]
 text = "Choices"
 
-[node name="Avatar" parent="V/ScrollContainer/V/DialogueLineEditor" index="5"]
+[node name="Avatar" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="5"]
 text = "Avatar"
 
-[node name="ItemRequired" parent="V/ScrollContainer/V/DialogueLineEditor" index="6"]
+[node name="ItemRequired" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="6"]
 text = "Item need"
 
-[node name="ItemGive" parent="V/ScrollContainer/V/DialogueLineEditor" index="7"]
+[node name="ItemGive" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="7"]
 text = "Item give"
 
-[node name="Event" parent="V/ScrollContainer/V/DialogueLineEditor" index="8"]
+[node name="Event" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="8"]
 text = "Event"
 
-[node name="DeleteButton" parent="V/ScrollContainer/V/DialogueLineEditor" index="9"]
+[node name="DeleteButton" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="9"]
 disabled = true
 
-[node name="M" type="MarginContainer" parent="V/ScrollContainer/V"]
+[node name="M" type="MarginContainer" parent="H/V/V/ScrollContainer/V"]
 layout_mode = 2
 theme_override_constants/margin_bottom = 20
 
-[node name="Entries" type="VBoxContainer" parent="V/ScrollContainer/V"]
+[node name="Entries" type="VBoxContainer" parent="H/V/V/ScrollContainer/V"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[editable path="V/ScrollContainer/V/DialogueLineEditor"]
+[editable path="H/V/V/ScrollContainer/V/DialogueLineEditor"]
