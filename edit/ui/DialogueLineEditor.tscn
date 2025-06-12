@@ -1,0 +1,63 @@
+[gd_scene load_steps=2 format=3 uid="uid://c88hulx3ptvny"]
+
+[ext_resource type="Script" uid="uid://dx7x2i3ymxk1r" path="res://ui/DialogueLineEditor.gd" id="1"]
+
+[node name="DialogueLineEditor" type="HBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1")
+
+[node name="ID" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "ID"
+
+[node name="Speaker" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Speaker"
+
+[node name="Text" type="TextEdit" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+wrap_mode = 1
+scroll_fit_content_height = true
+
+[node name="Next" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Next"
+
+[node name="Choices" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Choices (Label:ID,Label2:ID2)"
+
+[node name="Avatar" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Avatar Path"
+
+[node name="ItemRequired" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Item Required"
+
+[node name="ItemGive" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Item Give (comma separated)"
+
+[node name="Event" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Event Key"
+
+[node name="DeleteButton" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Delete Entry"
