@@ -19,6 +19,23 @@ func _ready():
 	load_json()
 	
 
+func visualize_json():
+	var key_order := [
+		"ID", "Speaker", "Text", "Next", "Choices",
+		"Avatar", "ItemRequired", "ItemGive", "Event"
+	]
+	var dialogue_dict := {}
+	for entry in dialogue_data:
+		if entry.has("ID"):
+			var ordered_entry := {}
+			for k in key_order:
+				ordered_entry[k] = entry.get(k, "")
+			dialogue_dict[entry["ID"]] = ordered_entry
+	json_preview.text = ordered_dict_to_json(dialogue_dict, key_order)
+
+
+
+
 func load_json():
 	if FileAccess.file_exists(DIALOGUE_PATH):
 		var file = FileAccess.open(DIALOGUE_PATH, FileAccess.READ)
@@ -33,30 +50,12 @@ func load_json():
 			for id in result.keys():
 				dialogue_data.append(result[id])
 			refresh_ui()
+			visualize_json()
 		else:
 			push_error("Dialogue file is not a dictionary structure.")
 	else:
 		dialogue_data = []
-
-
-func ordered_dict_to_json(data: Dictionary, key_order: Array) -> String:
-	var json_str := "{\n"
-	var keys = data.keys()
-	keys.sort_custom(func(a, b): return int(a.get_slice("_", -1)) < int(b.get_slice("_", -1)))
-	for i in range(keys.size()):
-		var id = keys[i]
-		var entry = data[id]
-		json_str += "\t\"" + id + "\": {\n"
-		for j in range(key_order.size()):
-			var key = key_order[j]
-			var value = entry.get(key, "")
-			json_str += "\t\t\"" + key + "\": " + JSON.stringify(value)
-
-			json_str += ",\n" if j < key_order.size() - 1 else "\n"
-		json_str += "\t}"
-		json_str += ",\n" if i < keys.size() - 1 else "\n"
-	json_str += "}"
-	return json_str
+		json_preview.text = "{}"
 
 
 func save_json():
@@ -82,7 +81,32 @@ func save_json():
 	file.store_string(json_text)
 	file.close()
 
-	json_preview.text =  json_text
+	visualize_json()
+
+
+
+
+func ordered_dict_to_json(data: Dictionary, key_order: Array) -> String:
+	var json_str := "{\n"
+	var keys = data.keys()
+	keys.sort_custom(func(a, b): return int(a.get_slice("_", -1)) < int(b.get_slice("_", -1)))
+	for i in range(keys.size()):
+		var id = keys[i]
+		var entry = data[id]
+		json_str += "\t\"" + id + "\": {\n"
+		for j in range(key_order.size()):
+			var key = key_order[j]
+			var value = entry.get(key, "")
+			json_str += "\t\t\"" + key + "\": " + JSON.stringify(value)
+
+			json_str += ",\n" if j < key_order.size() - 1 else "\n"
+		json_str += "\t}"
+		json_str += ",\n" if i < keys.size() - 1 else "\n"
+	json_str += "}"
+	return json_str
+
+
+
 
 
 

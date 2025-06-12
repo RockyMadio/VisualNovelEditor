@@ -20,7 +20,7 @@ size_flags_horizontal = 3
 placeholder_text = "Speaker"
 
 [node name="Text" type="TextEdit" parent="."]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 wrap_mode = 1
@@ -31,11 +31,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Next"
 
-[node name="Choices" type="LineEdit" parent="."]
+[node name="Choices" type="TextEdit" parent="."]
 custom_minimum_size = Vector2(111, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Choice 1:ID,Choice 2:ID2"
+placeholder_text = "Choice 1:ID
+Choice 2:ID2"
+scroll_fit_content_height = true
 
 [node name="Avatar" type="LineEdit" parent="."]
 layout_mode = 2

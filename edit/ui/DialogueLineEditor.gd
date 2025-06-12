@@ -22,17 +22,29 @@ func set_data(data: Dictionary):
 			field.text_changed.connect(_on_any_field_changed)
 	$DeleteButton.pressed.connect(_on_DeleteButton_pressed)
 
+func clean_text(text: String) -> String:
+	return text.replace("\n", "").strip_edges()
+
 func _on_any_field_changed(new_text=""):
+
+
+	entry_data["Choices"] = clean_text($Choices.text)
+	entry_data["ItemRequired"] = clean_text($ItemRequired.text)
+	entry_data["ItemGive"] = clean_text($ItemGive.text)
+	entry_data["Event"] = clean_text($Event.text)
+
+	# Other fields unchanged
 	entry_data["ID"] = $ID.text
 	entry_data["Speaker"] = $Speaker.text
 	entry_data["Text"] = $Text.text
 	entry_data["Next"] = $Next.text
-	entry_data["Choices"] = $Choices.text
 	entry_data["Avatar"] = $Avatar.text
-	entry_data["ItemRequired"] = $ItemRequired.text
-	entry_data["ItemGive"] = $ItemGive.text
-	entry_data["Event"] = $Event.text
+
 	emit_signal("data_changed", entry_data, entry_data["ID"])
+
+	
+	emit_signal("data_changed", entry_data, entry_data["ID"])
+
 
 func _on_DeleteButton_pressed():
 	emit_signal("delete_requested", entry_data["ID"])
