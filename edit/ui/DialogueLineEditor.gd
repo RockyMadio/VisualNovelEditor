@@ -13,8 +13,7 @@ func set_data(data: Dictionary):
 	$Next.text = data.get("Next", "")
 	$Choices.text = data.get("Choices", "")
 	$Avatar.text = data.get("Avatar", "")
-	$ItemRequired.text = data.get("ItemRequired", "")
-	$ItemGive.text = data.get("ItemGive", "")
+
 	$Event.text = data.get("Event", "")
 
 	for field in get_children():
@@ -29,8 +28,6 @@ func _on_any_field_changed(new_text=""):
 
 
 	entry_data["Choices"] = clean_text($Choices.text)
-	entry_data["ItemRequired"] = clean_text($ItemRequired.text)
-	entry_data["ItemGive"] = clean_text($ItemGive.text)
 	entry_data["Event"] = clean_text($Event.text)
 
 	# Other fields unchanged
@@ -42,8 +39,7 @@ func _on_any_field_changed(new_text=""):
 
 	emit_signal("data_changed", entry_data, entry_data["ID"])
 
-	
-	emit_signal("data_changed", entry_data, entry_data["ID"])
+
 
 
 func _on_DeleteButton_pressed():

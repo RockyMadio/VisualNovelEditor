@@ -22,7 +22,7 @@ func _ready():
 func visualize_json():
 	var key_order := [
 		"ID", "Speaker", "Text", "Next", "Choices",
-		"Avatar", "ItemRequired", "ItemGive", "Event"
+		"Avatar",  "Event"
 	]
 	var dialogue_dict := {}
 	for entry in dialogue_data:
@@ -62,7 +62,7 @@ func save_json():
 	var dialogue_dict := {}
 	var key_order := [
 		"ID", "Speaker", "Text", "Next", "Choices",
-		"Avatar", "ItemRequired", "ItemGive", "Event"
+		"Avatar", "Event"
 	]
 
 	for entry in dialogue_data:
@@ -140,8 +140,6 @@ func _on_AddNewEntry_pressed():
 		"Next": "",
 		"Choices": "",
 		"Avatar": "",
-		"ItemRequired": "",
-		"ItemGive": "",
 		"Event": ""
 	}
 	dialogue_data.append(new_entry)

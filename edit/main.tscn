@@ -23,7 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="JSONPreview" type="RichTextLabel" parent="H"]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 focus_mode = 2
 selection_enabled = true
@@ -69,32 +69,33 @@ layout_mode = 2
 
 [node name="ID" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="0"]
 text = "ID"
+editable = false
 
 [node name="Speaker" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="1"]
 text = "Speaker"
+editable = false
 
 [node name="Text" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="2"]
-text = "Content, or only translation key"
+text = "Content / Dialogue key"
+editable = false
 
 [node name="Next" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="3"]
 text = "Skip to"
+editable = false
 
 [node name="Choices" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="4"]
 text = "Choices"
+editable = false
 
 [node name="Avatar" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="5"]
 text = "Avatar"
+editable = false
 
-[node name="ItemRequired" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="6"]
-text = "Item need"
-
-[node name="ItemGive" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="7"]
-text = "Item give"
-
-[node name="Event" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="8"]
+[node name="Event" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="6"]
 text = "Event"
+editable = false
 
-[node name="DeleteButton" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="9"]
+[node name="DeleteButton" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="7"]
 disabled = true
 
 [node name="M" type="MarginContainer" parent="H/V/V/ScrollContainer/V"]

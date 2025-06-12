@@ -44,16 +44,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Avatar"
 
-[node name="ItemRequired" type="LineEdit" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "Item Required"
-
-[node name="ItemGive" type="LineEdit" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "Item Give (comma separated)"
-
 [node name="Event" type="LineEdit" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
