@@ -2,6 +2,8 @@ extends HBoxContainer
 
 signal data_changed(data: Dictionary, id: String)
 signal delete_requested(id: String)
+signal move_up_requested(id: String)
+signal move_down_requested(id: String)
 
 var entry_data: Dictionary
 
@@ -19,7 +21,18 @@ func set_data(data: Dictionary):
 	for field in get_children():
 		if field is LineEdit or field is TextEdit:
 			field.text_changed.connect(_on_any_field_changed)
-	$DeleteButton.pressed.connect(_on_DeleteButton_pressed)
+	$V/DeleteButton.pressed.connect(_on_DeleteButton_pressed)
+
+	$V/H/MoveUpButton.pressed.connect(_on_move_up_pressed)
+	$V/H/MoveDownButton.pressed.connect(_on_move_down_pressed)
+
+
+func _on_move_up_pressed():
+	emit_signal("move_up_requested", entry_data["ID"])
+
+func _on_move_down_pressed():
+	emit_signal("move_down_requested", entry_data["ID"])
+
 
 func clean_text(text: String) -> String:
 	return text.replace("\n", "").strip_edges()

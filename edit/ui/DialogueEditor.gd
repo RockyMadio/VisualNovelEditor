@@ -12,7 +12,7 @@ const DIALOGUE_PATH := "user://dialogue.json"
 @onready var create_button = $H/V/H/V/CreateNewFile
 @onready var open_existing_button = $H/V/H/V/OpenExistingFile
 
-
+@onready var info_label = $H/V/H/Control/InfoLabel
 @onready var json_preview = $H/JSONPreview
 
 @onready var file_dialog_open = $FileDialogOpen
@@ -20,9 +20,17 @@ const DIALOGUE_PATH := "user://dialogue.json"
 var dialogue_data: Array = []
 var current_dialogue_path: String = DIALOGUE_PATH
 
+var last_open_dir: String = ""
+var last_save_dir: String = ""
+
+
 func _ready():
 	load_button.visible = false
 	save_button.visible = false
+	
+	add_button.visible = false   # hide add_button initially
+	info_label.visible = true    # show info label initially
+	
 	load_button.pressed.connect(load_json)
 	save_button.pressed.connect(save_json)
 	add_button.pressed.connect(_on_AddNewEntry_pressed)
@@ -40,29 +48,39 @@ func _ready():
 	file_dialog_save.mode = FileDialog.FILE_MODE_SAVE_FILE
 	
 
-	
 func _on_open_existing_file_pressed():
-	file_dialog_open.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS).get_base_dir()
+	if last_open_dir != "":
+		file_dialog_open.current_dir = last_open_dir
+	else:
+		file_dialog_open.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS).get_base_dir()
 	file_dialog_open.popup_centered()
 
-
 func _on_create_new_file_pressed():
-	file_dialog_save.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS).get_base_dir()
+	if last_save_dir != "":
+		file_dialog_save.current_dir = last_save_dir
+	else:
+		file_dialog_save.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS).get_base_dir()
 	file_dialog_save.popup_centered()
 
 
 func _on_file_open_selected(path: String):
 	current_dialogue_path = path
+	last_open_dir = path.get_base_dir()
 	load_json()
 	load_button.visible = true
 	save_button.visible = true
+	add_button.visible = true
+	info_label.visible = false     # hide label when file loaded
 
 
 func _on_file_save_selected(path: String):
 	current_dialogue_path = path
+	last_save_dir = path.get_base_dir()
 	save_json()
 	load_button.visible = true
 	save_button.visible = true
+	add_button.visible = true
+	info_label.visible = false     # hide label when file created
 
 
 
@@ -166,7 +184,30 @@ func refresh_ui():
 		line_editor.set_data(line)
 		line_editor.data_changed.connect(_on_line_data_changed)
 		line_editor.delete_requested.connect(_on_line_deleted)
+		
+		# 👇 Connect move up/down
+		line_editor.move_up_requested.connect(_on_line_move_up)
+		line_editor.move_down_requested.connect(_on_line_move_down)
 		entries_container.add_child(line_editor)
+
+func _on_line_move_up(id: String):
+	for i in range(1, dialogue_data.size()):
+		if dialogue_data[i]["ID"] == id:
+			var temp = dialogue_data[i]
+			dialogue_data[i] = dialogue_data[i - 1]
+			dialogue_data[i - 1] = temp
+			break
+	refresh_ui()
+
+func _on_line_move_down(id: String):
+	for i in range(dialogue_data.size() - 1):
+		if dialogue_data[i]["ID"] == id:
+			var temp = dialogue_data[i]
+			dialogue_data[i] = dialogue_data[i + 1]
+			dialogue_data[i + 1] = temp
+			break
+	refresh_ui()
+
 
 func _on_line_data_changed(updated_line: Dictionary, id: String):
 	for i in range(dialogue_data.size()):

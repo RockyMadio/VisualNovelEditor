@@ -339,6 +339,15 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_ig7tw")
 
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.103744, 0.103744, 0.103744, 1)
+
 [node name="H" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -404,6 +413,18 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_272bh")
 
+[node name="InfoLabel" type="Label" parent="H/V/H/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "Please load or create a file"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="V" type="VBoxContainer" parent="H/V"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -452,8 +473,8 @@ selecting_enabled = false
 text = "Event"
 selecting_enabled = false
 
-[node name="DeleteButton" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="7"]
-disabled = true
+[node name="V" parent="H/V/V/ScrollContainer/V/DialogueLineEditor" index="7"]
+modulate = Color(1, 1, 1, 0)
 
 [node name="M" type="MarginContainer" parent="H/V/V/ScrollContainer/V"]
 layout_mode = 2
@@ -462,6 +483,7 @@ theme_override_constants/margin_bottom = 20
 [node name="Entries" type="VBoxContainer" parent="H/V/V/ScrollContainer/V"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="AddNewEntry" type="Button" parent="H/V/V/ScrollContainer/V"]
 custom_minimum_size = Vector2(150, 20)

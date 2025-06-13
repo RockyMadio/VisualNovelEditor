@@ -27,6 +27,7 @@ custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_qs012")
+wrap_mode = 1
 scroll_fit_content_height = true
 
 [node name="Next" type="LineEdit" parent="."]
@@ -56,7 +57,23 @@ size_flags_horizontal = 3
 theme = ExtResource("2_qs012")
 placeholder_text = "Event Key"
 
-[node name="DeleteButton" type="Button" parent="."]
+[node name="V" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="DeleteButton" type="Button" parent="V"]
 layout_mode = 2
 theme = ExtResource("2_qs012")
 text = "X"
+
+[node name="H" type="HBoxContainer" parent="V"]
+layout_mode = 2
+
+[node name="MoveUpButton" type="Button" parent="V/H"]
+layout_mode = 2
+theme = ExtResource("2_qs012")
+text = "A"
+
+[node name="MoveDownButton" type="Button" parent="V/H"]
+layout_mode = 2
+theme = ExtResource("2_qs012")
+text = "V"
