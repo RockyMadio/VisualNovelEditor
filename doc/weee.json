@@ -1,0 +1,29 @@
+{
+	"new_1": {
+		"ID": "new_1",
+		"Speaker": "dsa",
+		"Text": "dsa",
+		"Next": "",
+		"Choices": "",
+		"Avatar": "",
+		"Event": ""
+	},
+	"new_2": {
+		"ID": "new_2",
+		"Speaker": "dsadsadsddsdsds",
+		"Text": "asdasdasd",
+		"Next": "",
+		"Choices": "",
+		"Avatar": "",
+		"Event": ""
+	},
+	"new_3": {
+		"ID": "new_3",
+		"Speaker": "",
+		"Text": "",
+		"Next": "",
+		"Choices": "",
+		"Avatar": "",
+		"Event": ""
+	}
+}

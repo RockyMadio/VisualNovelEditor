@@ -5,19 +5,66 @@ const DIALOGUE_PATH := "user://dialogue.json"
 
 
 @onready var entries_container = $H/V/V/ScrollContainer/V/Entries
-@onready var load_button =$H/V/H/V/LoadJSON
-@onready var save_button =$H/V/H/V/SaveJSON
-@onready var add_button = $H/V/H/V/AddNewEntry
+@onready var load_button =$H/V/H/V2/LoadJSON
+@onready var save_button =$H/V/H/V2/SaveJSON
+@onready var add_button = $H/V/V/ScrollContainer/V/AddNewEntry
+
+@onready var create_button = $H/V/H/V/CreateNewFile
+@onready var open_existing_button = $H/V/H/V/OpenExistingFile
+
+
 @onready var json_preview = $H/JSONPreview
 
+@onready var file_dialog_open = $FileDialogOpen
+@onready var file_dialog_save = $FileDialogSave
 var dialogue_data: Array = []
+var current_dialogue_path: String = DIALOGUE_PATH
 
 func _ready():
+	load_button.visible = false
+	save_button.visible = false
 	load_button.pressed.connect(load_json)
 	save_button.pressed.connect(save_json)
 	add_button.pressed.connect(_on_AddNewEntry_pressed)
-	load_json()
 	
+
+	create_button.pressed.connect(_on_create_new_file_pressed)
+	open_existing_button.pressed.connect(_on_open_existing_file_pressed)
+
+	file_dialog_open.file_selected.connect(_on_file_open_selected)
+	file_dialog_open.filters = PackedStringArray(["*.json ; JSON Files"])
+	file_dialog_open.mode = FileDialog.FILE_MODE_OPEN_FILE
+
+	file_dialog_save.file_selected.connect(_on_file_save_selected)
+	file_dialog_save.filters = PackedStringArray(["*.json ; JSON Files"])
+	file_dialog_save.mode = FileDialog.FILE_MODE_SAVE_FILE
+	
+
+	
+func _on_open_existing_file_pressed():
+	file_dialog_open.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS).get_base_dir()
+	file_dialog_open.popup_centered()
+
+
+func _on_create_new_file_pressed():
+	file_dialog_save.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS).get_base_dir()
+	file_dialog_save.popup_centered()
+
+
+func _on_file_open_selected(path: String):
+	current_dialogue_path = path
+	load_json()
+	load_button.visible = true
+	save_button.visible = true
+
+
+func _on_file_save_selected(path: String):
+	current_dialogue_path = path
+	save_json()
+	load_button.visible = true
+	save_button.visible = true
+
+
 
 func visualize_json():
 	var key_order := [
@@ -37,8 +84,8 @@ func visualize_json():
 
 
 func load_json():
-	if FileAccess.file_exists(DIALOGUE_PATH):
-		var file = FileAccess.open(DIALOGUE_PATH, FileAccess.READ)
+	if FileAccess.file_exists(current_dialogue_path):
+		var file = FileAccess.open(current_dialogue_path, FileAccess.READ)
 		if file == null:
 			push_error("Failed to open file for reading: " + DIALOGUE_PATH)
 			return
@@ -74,7 +121,7 @@ func save_json():
 
 	var json_text := ordered_dict_to_json(dialogue_dict, key_order)
 
-	var file = FileAccess.open(DIALOGUE_PATH, FileAccess.WRITE)
+	var file = FileAccess.open(current_dialogue_path, FileAccess.WRITE)
 	if file == null:
 		push_error("Failed to open file for writing: " + DIALOGUE_PATH)
 		return
